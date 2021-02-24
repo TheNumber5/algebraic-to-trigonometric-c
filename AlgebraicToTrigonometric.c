@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <time.h> //TODO: use less libraries
 
+//Converter of complex numbers from algebraic form to trigonometric form
+//Version: 1.1b
+
 typedef struct algebraic_complex {
     float real;
     float imaginary;
@@ -26,25 +29,25 @@ void transform_to_trigonometric(float algebraic_real, float algebraic_complex, u
         number_trig.argument = atan(number_alg.imaginary/number_alg.real);
     }
     else if(number_alg.real<=0 && number_alg.imaginary>=0) {
-        number_alg.real = abs(number_alg.real);
+        number_alg.real = fabsf(number_alg.real);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+pi/2;
     }
     else if(number_alg.real<=0 && number_alg.imaginary<=0) {
-        number_alg.real = abs(number_alg.real);
-        number_alg.imaginary = abs(number_alg.imaginary);
+        number_alg.real = fabsf(number_alg.real);
+        number_alg.imaginary = fabsf(number_alg.imaginary);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+pi;
     }
     else if(number_alg.real>=0 && number_alg.imaginary<=0) {
-        number_alg.imaginary = abs(number_alg.imaginary);
+        number_alg.imaginary = fabsf(number_alg.imaginary);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+3*pi/2;
     } //TODO: make this be less stupid, this is very bad
 
     number_trig.modulus = sqrt(number_alg.real*number_alg.real+number_alg.imaginary*number_alg.imaginary); //This remains the same
     if(mode == 1) {
-    printf("%f %f\n", number_trig.modulus, number_trig.argument);
+    printf("%f %f", number_trig.modulus, number_trig.argument);
     }
     else if(mode == 2){
     fprintf(out_file, "%f %f\n", number_trig.modulus, number_trig.argument);
