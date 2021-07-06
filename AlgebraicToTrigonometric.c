@@ -5,7 +5,7 @@
 #include <time.h> //TODO: use less libraries
 
 //Converter of complex numbers from algebraic form to trigonometric form
-//Version: 1.1b
+//Version: 1.2b
 
 typedef struct algebraic_complex {
     float real;
@@ -25,21 +25,33 @@ void transform_to_trigonometric(float algebraic_real, float algebraic_complex, u
     trigonometric_cmp number_trig;
     number_alg.real = algebraic_real;
     number_alg.imaginary = algebraic_complex;
-    if(number_alg.real>=0 && number_alg.imaginary>=0) {
+	if(number_alg.imaginary==0 && number_alg.real>0) {
+		number_trig.argument = 0;
+	}
+	else if(number_alg.imaginary==0 && number_alg.real<0) {
+		number_trig.argument = pi;
+	}
+	else if(number_alg.imaginary>0 && number_alg.real==0) {
+		number_trig.argument = pi/2;
+	}
+	else if(number_alg.imaginary<0 && number_alg.real==0) {
+		number_trig.argument = 3*pi/2;
+	}
+    if(number_alg.real>0 && number_alg.imaginary>0) {
         number_trig.argument = atan(number_alg.imaginary/number_alg.real);
     }
-    else if(number_alg.real<=0 && number_alg.imaginary>=0) {
+    else if(number_alg.real<0 && number_alg.imaginary>0) {
         number_alg.real = fabsf(number_alg.real);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+pi/2;
     }
-    else if(number_alg.real<=0 && number_alg.imaginary<=0) {
+    else if(number_alg.real<0 && number_alg.imaginary<0) {
         number_alg.real = fabsf(number_alg.real);
         number_alg.imaginary = fabsf(number_alg.imaginary);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+pi;
     }
-    else if(number_alg.real>=0 && number_alg.imaginary<=0) {
+    else if(number_alg.real>0 && number_alg.imaginary<0) {
         number_alg.imaginary = fabsf(number_alg.imaginary);
         //---------------------//
         number_trig.argument = atan(number_alg.imaginary/number_alg.real)+3*pi/2;
